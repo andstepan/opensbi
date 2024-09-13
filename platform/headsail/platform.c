@@ -19,8 +19,8 @@
 #include <sbi_utils/timer/aclint_mtimer.h>
 
 #define PLATFORM_PLIC_ADDR			0x80000
-#define PLATFORM_PLIC_SIZE			(0x200000 + \
-					 					(PLATFORM_HART_COUNT * 0x1000))
+#define PLATFORM_PLIC_SIZE			0xC000 	/* The PLIC implemented in the SoC has 
+											 a tightened address space. */
 #define PLATFORM_PLIC_NUM_SOURCES	27
 #define PLATFORM_HART_COUNT			4
 #define PLATFORM_CLINT_ADDR			0x60000
