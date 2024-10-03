@@ -17,12 +17,12 @@
 #include <sbi/sbi_string.h>
 #include <sbi_utils/irqchip/plic.h>
 
-#define PLIC_PRIORITY_BASE 0x0
-#define PLIC_PENDING_BASE 0x1000
-#define PLIC_ENABLE_BASE 0x2000
-#define PLIC_ENABLE_STRIDE 0x80
-#define PLIC_CONTEXT_BASE 0x200000
-#define PLIC_CONTEXT_STRIDE 0x1000
+#define PLIC_PRIORITY_BASE 0x0			// Same as standard
+#define PLIC_PENDING_BASE 0x1000		// ?? (Ok, this does not exist)
+#define PLIC_ENABLE_BASE 0x2000			// Same as standard
+#define PLIC_ENABLE_STRIDE 0x80			// Same as standard
+#define PLIC_CONTEXT_BASE 0x4000		// 0x200000 in standard implementation
+#define PLIC_CONTEXT_STRIDE 0x1000		// Same as standard
 
 static u32 plic_get_priority(const struct plic_data *plic, u32 source)
 {
