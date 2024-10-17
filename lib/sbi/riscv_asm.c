@@ -130,10 +130,12 @@ unsigned long csr_read_num(int csr_num)
 	switchcase_csr_read(CSR_MCOUNTINHIBIT, ret)
 	switchcase_csr_read(CSR_MCYCLECFG, ret)
 	switchcase_csr_read(CSR_MINSTRETCFG, ret)
+#if false
 	switchcase_csr_read(CSR_MHPMEVENT3, ret)
 	switchcase_csr_read_4(CSR_MHPMEVENT4, ret)
 	switchcase_csr_read_8(CSR_MHPMEVENT8, ret)
 	switchcase_csr_read_16(CSR_MHPMEVENT16, ret)
+#endif
 #if __riscv_xlen == 32
 	switchcase_csr_read(CSR_MCYCLEH, ret)
 	switchcase_csr_read(CSR_MINSTRETH, ret)

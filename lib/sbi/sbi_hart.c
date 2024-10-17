@@ -74,6 +74,7 @@ static void mstatus_init(struct sbi_scratch *scratch)
 	for (cidx = 0; cidx <= 28; cidx++) {
 		if (!(mhpm_mask & 1 << (cidx + 3)))
 			continue;
+#if false
 #if __riscv_xlen == 32
 		csr_write_num(CSR_MHPMEVENT3 + cidx,
 			       mhpmevent_init_val & 0xFFFFFFFF);
@@ -82,6 +83,7 @@ static void mstatus_init(struct sbi_scratch *scratch)
 				      mhpmevent_init_val >> BITS_PER_LONG);
 #else
 		csr_write_num(CSR_MHPMEVENT3 + cidx, mhpmevent_init_val);
+#endif
 #endif
 	}
 

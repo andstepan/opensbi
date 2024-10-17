@@ -315,14 +315,15 @@ void sbi_pmu_ovf_irq()
 
 static int pmu_ctr_enable_irq_hw(int ctr_idx)
 {
+#if false
 	unsigned long mhpmevent_csr;
 	unsigned long mhpmevent_curr;
 	unsigned long mip_val;
 	unsigned long of_mask;
-
+#endif
 	if (ctr_idx < 3 || ctr_idx >= SBI_PMU_HW_CTR_MAX)
 		return SBI_EFAIL;
-
+#if false
 #if __riscv_xlen == 32
 	mhpmevent_csr = CSR_MHPMEVENT3H  + ctr_idx - 3;
 	of_mask = (uint32_t)~MHPMEVENTH_OF;
@@ -330,9 +331,10 @@ static int pmu_ctr_enable_irq_hw(int ctr_idx)
 	mhpmevent_csr = CSR_MHPMEVENT3 + ctr_idx - 3;
 	of_mask = ~MHPMEVENT_OF;
 #endif
-
 	mhpmevent_curr = csr_read_num(mhpmevent_csr);
 	mip_val = csr_read(CSR_MIP);
+#endif
+
 	/**
 	 * Clear out the OF bit so that next interrupt can be enabled.
 	 * This should be done only when the corresponding overflow interrupt
@@ -341,10 +343,12 @@ static int pmu_ctr_enable_irq_hw(int ctr_idx)
 	 * Otherwise, there will be race conditions where we may clear the bit
 	 * the software is yet to handle the interrupt.
 	 */
+#if false
 	if (!(mip_val & MIP_LCOFIP)) {
 		mhpmevent_curr &= of_mask;
 		csr_write_num(mhpmevent_csr, mhpmevent_curr);
 	}
+#endif
 
 	return 0;
 }
@@ -539,6 +543,7 @@ static int pmu_reset_hw_mhpmevent(int ctr_idx)
 {
 	if (ctr_idx < 3 || ctr_idx >= SBI_PMU_HW_CTR_MAX)
 		return SBI_EFAIL;
+#if false
 #if __riscv_xlen == 32
 	csr_write_num(CSR_MHPMEVENT3 + ctr_idx - 3, 0);
 	if (sbi_hart_has_extension(sbi_scratch_thishart_ptr(),
@@ -547,7 +552,7 @@ static int pmu_reset_hw_mhpmevent(int ctr_idx)
 #else
 	csr_write_num(CSR_MHPMEVENT3 + ctr_idx - 3, 0);
 #endif
-
+#endif
 	return 0;
 }
 
@@ -637,7 +642,7 @@ static int pmu_update_hw_mhpmevent(struct sbi_pmu_hw_event *hw_evt, int ctr_idx,
 		pmu_update_inhibit_flags(flags, &mhpmevent_val);
 	if (pmu_dev && pmu_dev->hw_counter_filter_mode)
 		pmu_dev->hw_counter_filter_mode(flags, ctr_idx);
-
+#if false
 #if __riscv_xlen == 32
 	csr_write_num(CSR_MHPMEVENT3 + ctr_idx - 3, mhpmevent_val & 0xFFFFFFFF);
 	if (sbi_hart_has_extension(scratch, SBI_HART_EXT_SSCOFPMF))
@@ -646,7 +651,7 @@ static int pmu_update_hw_mhpmevent(struct sbi_pmu_hw_event *hw_evt, int ctr_idx,
 #else
 	csr_write_num(CSR_MHPMEVENT3 + ctr_idx - 3, mhpmevent_val);
 #endif
-
+#endif
 	return 0;
 }
 
