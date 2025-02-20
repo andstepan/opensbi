@@ -13,6 +13,7 @@
 #include <sbi/sbi_platform.h>
 #include <sbi/sbi_scratch.h>
 #include <sbi/sbi_trap.h>
+#include "encoding.h"
 
 #define BOOT_STATUS_LOTTERY_DONE	1
 #define BOOT_STATUS_BOOT_HART_DONE	2
@@ -36,6 +37,15 @@
 	.globl _start
 	.globl _start_warm
 _start:
+	/* Move L2 cached region */
+    # li t0, 0x54180
+    # li t1, 0x110000000
+    # sd t1, 0(t0)
+	/* Set up a PMP to permit all accesses */
+	li t0, (1 << (31 + (__riscv_xlen / 64) * (53 - 31))) - 1
+    csrw pmpaddr0, t0
+    li t0, PMP_NAPOT | PMP_R | PMP_W | PMP_X
+    csrw pmpcfg0, t0
 	/* Find preferred boot HART id */
 	MOV_3R	s0, a0, s1, a1, s2, a2
 	call	fw_boot_hart

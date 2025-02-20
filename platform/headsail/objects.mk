@@ -8,7 +8,7 @@
 platform-cppflags-y =
 
 # C Compiler and assembler flags.
-platform-cflags-y = -g -O0
+platform-cflags-y = -Oz -march=rv64g
 platform-asflags-y =
 
 # Linker flags: additional libraries and object files that the platform
