@@ -42,154 +42,154 @@
 	"        | |\n"                                     \
 	"        |_|\n\n"
 
-static void sbi_boot_print_banner(struct sbi_scratch *scratch)
-{
-	if (scratch->options & SBI_SCRATCH_NO_BOOT_PRINTS)
-		return;
+// static void sbi_boot_print_banner(struct sbi_scratch *scratch)
+// {
+// 	if (scratch->options & SBI_SCRATCH_NO_BOOT_PRINTS)
+// 		return;
 
-#ifdef OPENSBI_VERSION_GIT
-	sbi_printf("\nOpenSBI %s\n", OPENSBI_VERSION_GIT);
-#else
-	sbi_printf("\nOpenSBI v%d.%d\n", OPENSBI_VERSION_MAJOR,
-		   OPENSBI_VERSION_MINOR);
-#endif
+// #ifdef OPENSBI_VERSION_GIT
+// 	sbi_printf("\nOpenSBI %s\n", OPENSBI_VERSION_GIT);
+// #else
+// 	sbi_printf("\nOpenSBI v%d.%d\n", OPENSBI_VERSION_MAJOR,
+// 		   OPENSBI_VERSION_MINOR);
+// #endif
 
-#ifdef OPENSBI_BUILD_TIME_STAMP
-	sbi_printf("Build time: %s\n", OPENSBI_BUILD_TIME_STAMP);
-#endif
+// #ifdef OPENSBI_BUILD_TIME_STAMP
+// 	sbi_printf("Build time: %s\n", OPENSBI_BUILD_TIME_STAMP);
+// #endif
 
-#ifdef OPENSBI_BUILD_COMPILER_VERSION
-	sbi_printf("Build compiler: %s\n", OPENSBI_BUILD_COMPILER_VERSION);
-#endif
+// #ifdef OPENSBI_BUILD_COMPILER_VERSION
+// 	sbi_printf("Build compiler: %s\n", OPENSBI_BUILD_COMPILER_VERSION);
+// #endif
 
-	sbi_printf(BANNER);
-}
+// 	sbi_printf(BANNER);
+// }
 
-static void sbi_boot_print_general(struct sbi_scratch *scratch)
-{
-	char str[128];
-	const struct sbi_pmu_device *pdev;
-	const struct sbi_hsm_device *hdev;
-	const struct sbi_ipi_device *idev;
-	const struct sbi_timer_device *tdev;
-	const struct sbi_console_device *cdev;
-	const struct sbi_system_reset_device *srdev;
-	const struct sbi_system_suspend_device *susp_dev;
-	const struct sbi_cppc_device *cppc_dev;
-	const struct sbi_platform *plat = sbi_platform_ptr(scratch);
+// static void sbi_boot_print_general(struct sbi_scratch *scratch)
+// {
+// 	char str[128];
+// 	const struct sbi_pmu_device *pdev;
+// 	const struct sbi_hsm_device *hdev;
+// 	const struct sbi_ipi_device *idev;
+// 	const struct sbi_timer_device *tdev;
+// 	const struct sbi_console_device *cdev;
+// 	const struct sbi_system_reset_device *srdev;
+// 	const struct sbi_system_suspend_device *susp_dev;
+// 	const struct sbi_cppc_device *cppc_dev;
+// 	const struct sbi_platform *plat = sbi_platform_ptr(scratch);
 
-	if (scratch->options & SBI_SCRATCH_NO_BOOT_PRINTS)
-		return;
+// 	if (scratch->options & SBI_SCRATCH_NO_BOOT_PRINTS)
+// 		return;
 
-	/* Platform details */
-	sbi_printf("Platform Name             : %s\n",
-		   sbi_platform_name(plat));
-	sbi_platform_get_features_str(plat, str, sizeof(str));
-	sbi_printf("Platform Features         : %s\n", str);
-	sbi_printf("Platform HART Count       : %u\n",
-		   sbi_platform_hart_count(plat));
-	idev = sbi_ipi_get_device();
-	sbi_printf("Platform IPI Device       : %s\n",
-		   (idev) ? idev->name : "---");
-	tdev = sbi_timer_get_device();
-	sbi_printf("Platform Timer Device     : %s @ %luHz\n",
-		   (tdev) ? tdev->name : "---",
-		   (tdev) ? tdev->timer_freq : 0);
-	cdev = sbi_console_get_device();
-	sbi_printf("Platform Console Device   : %s\n",
-		   (cdev) ? cdev->name : "---");
-	hdev = sbi_hsm_get_device();
-	sbi_printf("Platform HSM Device       : %s\n",
-		   (hdev) ? hdev->name : "---");
-	pdev = sbi_pmu_get_device();
-	sbi_printf("Platform PMU Device       : %s\n",
-		   (pdev) ? pdev->name : "---");
-	srdev = sbi_system_reset_get_device(SBI_SRST_RESET_TYPE_COLD_REBOOT, 0);
-	sbi_printf("Platform Reboot Device    : %s\n",
-		   (srdev) ? srdev->name : "---");
-	srdev = sbi_system_reset_get_device(SBI_SRST_RESET_TYPE_SHUTDOWN, 0);
-	sbi_printf("Platform Shutdown Device  : %s\n",
-		   (srdev) ? srdev->name : "---");
-	susp_dev = sbi_system_suspend_get_device();
-	sbi_printf("Platform Suspend Device   : %s\n",
-		   (susp_dev) ? susp_dev->name : "---");
-	cppc_dev = sbi_cppc_get_device();
-	sbi_printf("Platform CPPC Device      : %s\n",
-		   (cppc_dev) ? cppc_dev->name : "---");
+// 	/* Platform details */
+// 	sbi_printf("Platform Name             : %s\n",
+// 		   sbi_platform_name(plat));
+// 	sbi_platform_get_features_str(plat, str, sizeof(str));
+// 	sbi_printf("Platform Features         : %s\n", str);
+// 	sbi_printf("Platform HART Count       : %u\n",
+// 		   sbi_platform_hart_count(plat));
+// 	idev = sbi_ipi_get_device();
+// 	sbi_printf("Platform IPI Device       : %s\n",
+// 		   (idev) ? idev->name : "---");
+// 	tdev = sbi_timer_get_device();
+// 	sbi_printf("Platform Timer Device     : %s @ %luHz\n",
+// 		   (tdev) ? tdev->name : "---",
+// 		   (tdev) ? tdev->timer_freq : 0);
+// 	cdev = sbi_console_get_device();
+// 	sbi_printf("Platform Console Device   : %s\n",
+// 		   (cdev) ? cdev->name : "---");
+// 	hdev = sbi_hsm_get_device();
+// 	sbi_printf("Platform HSM Device       : %s\n",
+// 		   (hdev) ? hdev->name : "---");
+// 	pdev = sbi_pmu_get_device();
+// 	sbi_printf("Platform PMU Device       : %s\n",
+// 		   (pdev) ? pdev->name : "---");
+// 	srdev = sbi_system_reset_get_device(SBI_SRST_RESET_TYPE_COLD_REBOOT, 0);
+// 	sbi_printf("Platform Reboot Device    : %s\n",
+// 		   (srdev) ? srdev->name : "---");
+// 	srdev = sbi_system_reset_get_device(SBI_SRST_RESET_TYPE_SHUTDOWN, 0);
+// 	sbi_printf("Platform Shutdown Device  : %s\n",
+// 		   (srdev) ? srdev->name : "---");
+// 	susp_dev = sbi_system_suspend_get_device();
+// 	sbi_printf("Platform Suspend Device   : %s\n",
+// 		   (susp_dev) ? susp_dev->name : "---");
+// 	cppc_dev = sbi_cppc_get_device();
+// 	sbi_printf("Platform CPPC Device      : %s\n",
+// 		   (cppc_dev) ? cppc_dev->name : "---");
 
-	/* Firmware details */
-	sbi_printf("Firmware Base             : 0x%lx\n", scratch->fw_start);
-	sbi_printf("Firmware Size             : %d KB\n",
-		   (u32)(scratch->fw_size / 1024));
-	sbi_printf("Firmware RW Offset        : 0x%lx\n", scratch->fw_rw_offset);
-	sbi_printf("Firmware RW Size          : %d KB\n",
-		   (u32)((scratch->fw_size - scratch->fw_rw_offset) / 1024));
-	sbi_printf("Firmware Heap Offset      : 0x%lx\n", scratch->fw_heap_offset);
-	sbi_printf("Firmware Heap Size        : "
-		   "%d KB (total), %d KB (reserved), %d KB (used), %d KB (free)\n",
-		   (u32)(scratch->fw_heap_size / 1024),
-		   (u32)(sbi_heap_reserved_space() / 1024),
-		   (u32)(sbi_heap_used_space() / 1024),
-		   (u32)(sbi_heap_free_space() / 1024));
-	sbi_printf("Firmware Scratch Size     : "
-		   "%d B (total), %d B (used), %d B (free)\n",
-		   SBI_SCRATCH_SIZE,
-		   (u32)sbi_scratch_used_space(),
-		   (u32)(SBI_SCRATCH_SIZE - sbi_scratch_used_space()));
+// 	/* Firmware details */
+// 	sbi_printf("Firmware Base             : 0x%lx\n", scratch->fw_start);
+// 	sbi_printf("Firmware Size             : %d KB\n",
+// 		   (u32)(scratch->fw_size / 1024));
+// 	sbi_printf("Firmware RW Offset        : 0x%lx\n", scratch->fw_rw_offset);
+// 	sbi_printf("Firmware RW Size          : %d KB\n",
+// 		   (u32)((scratch->fw_size - scratch->fw_rw_offset) / 1024));
+// 	sbi_printf("Firmware Heap Offset      : 0x%lx\n", scratch->fw_heap_offset);
+// 	sbi_printf("Firmware Heap Size        : "
+// 		   "%d KB (total), %d KB (reserved), %d KB (used), %d KB (free)\n",
+// 		   (u32)(scratch->fw_heap_size / 1024),
+// 		   (u32)(sbi_heap_reserved_space() / 1024),
+// 		   (u32)(sbi_heap_used_space() / 1024),
+// 		   (u32)(sbi_heap_free_space() / 1024));
+// 	sbi_printf("Firmware Scratch Size     : "
+// 		   "%d B (total), %d B (used), %d B (free)\n",
+// 		   SBI_SCRATCH_SIZE,
+// 		   (u32)sbi_scratch_used_space(),
+// 		   (u32)(SBI_SCRATCH_SIZE - sbi_scratch_used_space()));
 
-	/* SBI details */
-	sbi_printf("Runtime SBI Version       : %d.%d\n",
-		   sbi_ecall_version_major(), sbi_ecall_version_minor());
-	sbi_printf("\n");
-}
+// 	/* SBI details */
+// 	sbi_printf("Runtime SBI Version       : %d.%d\n",
+// 		   sbi_ecall_version_major(), sbi_ecall_version_minor());
+// 	sbi_printf("\n");
+// }
 
-static void sbi_boot_print_domains(struct sbi_scratch *scratch)
-{
-	if (scratch->options & SBI_SCRATCH_NO_BOOT_PRINTS)
-		return;
+// static void sbi_boot_print_domains(struct sbi_scratch *scratch)
+// {
+// 	if (scratch->options & SBI_SCRATCH_NO_BOOT_PRINTS)
+// 		return;
 
-	/* Domain details */
-	sbi_domain_dump_all("      ");
-}
+// 	/* Domain details */
+// 	sbi_domain_dump_all("      ");
+// }
 
-static void sbi_boot_print_hart(struct sbi_scratch *scratch, u32 hartid)
-{
-	int xlen;
-	char str[128];
-	const struct sbi_domain *dom = sbi_domain_thishart_ptr();
+// static void sbi_boot_print_hart(struct sbi_scratch *scratch, u32 hartid)
+// {
+// 	int xlen;
+// 	char str[128];
+// 	const struct sbi_domain *dom = sbi_domain_thishart_ptr();
 
-	if (scratch->options & SBI_SCRATCH_NO_BOOT_PRINTS)
-		return;
+// 	if (scratch->options & SBI_SCRATCH_NO_BOOT_PRINTS)
+// 		return;
 
-	/* Determine MISA XLEN and MISA string */
-	xlen = misa_xlen();
-	if (xlen < 1) {
-		sbi_printf("Error %d getting MISA XLEN\n", xlen);
-		sbi_hart_hang();
-	}
+// 	/* Determine MISA XLEN and MISA string */
+// 	xlen = misa_xlen();
+// 	if (xlen < 1) {
+// 		sbi_printf("Error %d getting MISA XLEN\n", xlen);
+// 		sbi_hart_hang();
+// 	}
 
-	/* Boot HART details */
-	sbi_printf("Boot HART ID              : %u\n", hartid);
-	sbi_printf("Boot HART Domain          : %s\n", dom->name);
-	sbi_hart_get_priv_version_str(scratch, str, sizeof(str));
-	sbi_printf("Boot HART Priv Version    : %s\n", str);
-	misa_string(xlen, str, sizeof(str));
-	sbi_printf("Boot HART Base ISA        : %s\n", str);
-	sbi_hart_get_extensions_str(scratch, str, sizeof(str));
-	sbi_printf("Boot HART ISA Extensions  : %s\n", str);
-	sbi_printf("Boot HART PMP Count       : %d\n",
-		   sbi_hart_pmp_count(scratch));
-	sbi_printf("Boot HART PMP Granularity : %u bits\n",
-		   sbi_hart_pmp_log2gran(scratch));
-	sbi_printf("Boot HART PMP Address Bits: %d\n",
-		   sbi_hart_pmp_addrbits(scratch));
-	sbi_printf("Boot HART MHPM Info       : %lu (0x%08x)\n",
-		   sbi_popcount(sbi_hart_mhpm_mask(scratch)),
-		   sbi_hart_mhpm_mask(scratch));
-	sbi_printf("Boot HART Debug Triggers  : %d triggers\n",
-		   sbi_dbtr_get_total_triggers());
-	sbi_hart_delegation_dump(scratch, "Boot HART ", "         ");
-}
+// 	/* Boot HART details */
+// 	sbi_printf("Boot HART ID              : %u\n", hartid);
+// 	sbi_printf("Boot HART Domain          : %s\n", dom->name);
+// 	sbi_hart_get_priv_version_str(scratch, str, sizeof(str));
+// 	sbi_printf("Boot HART Priv Version    : %s\n", str);
+// 	misa_string(xlen, str, sizeof(str));
+// 	sbi_printf("Boot HART Base ISA        : %s\n", str);
+// 	sbi_hart_get_extensions_str(scratch, str, sizeof(str));
+// 	sbi_printf("Boot HART ISA Extensions  : %s\n", str);
+// 	sbi_printf("Boot HART PMP Count       : %d\n",
+// 		   sbi_hart_pmp_count(scratch));
+// 	sbi_printf("Boot HART PMP Granularity : %u bits\n",
+// 		   sbi_hart_pmp_log2gran(scratch));
+// 	sbi_printf("Boot HART PMP Address Bits: %d\n",
+// 		   sbi_hart_pmp_addrbits(scratch));
+// 	sbi_printf("Boot HART MHPM Info       : %lu (0x%08x)\n",
+// 		   sbi_popcount(sbi_hart_mhpm_mask(scratch)),
+// 		   sbi_hart_mhpm_mask(scratch));
+// 	sbi_printf("Boot HART Debug Triggers  : %d triggers\n",
+// 		   sbi_dbtr_get_total_triggers());
+// 	sbi_hart_delegation_dump(scratch, "Boot HART ", "         ");
+// }
 
 static unsigned long coldboot_done;
 
@@ -282,7 +282,7 @@ static void __noreturn init_coldboot(struct sbi_scratch *scratch, u32 hartid)
 	if (rc)
 		sbi_hart_hang();
 
-	sbi_boot_print_banner(scratch);
+	//sbi_boot_print_banner(scratch);
 
 	rc = sbi_irqchip_init(scratch, true);
 	if (rc) {
@@ -351,11 +351,11 @@ static void __noreturn init_coldboot(struct sbi_scratch *scratch, u32 hartid)
 		sbi_hart_hang();
 	}
 
-	sbi_boot_print_general(scratch);
+	//sbi_boot_print_general(scratch);
 
-	sbi_boot_print_domains(scratch);
+	//sbi_boot_print_domains(scratch);
 
-	sbi_boot_print_hart(scratch, hartid);
+	//sbi_boot_print_hart(scratch, hartid);
 
 	run_all_tests();
 
@@ -372,6 +372,8 @@ static void __noreturn init_coldboot(struct sbi_scratch *scratch, u32 hartid)
 
 	count = sbi_scratch_offset_ptr(scratch, init_count_offset);
 	(*count)++;
+
+	//sbi_printf("Reached end with no printing!\n");
 
 	sbi_hsm_hart_start_finish(scratch, hartid);
 }

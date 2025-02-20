@@ -53,7 +53,7 @@ static inline void sbi_ecall_console_puts(const char *str)
 
 void test_main(unsigned long a0, unsigned long a1)
 {
-	sbi_ecall_console_puts("\nTest payload running\n");
+	//sbi_ecall_console_puts("\nTest payload running\n");
 
 	while (1)
 		wfi();
