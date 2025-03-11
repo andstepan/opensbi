@@ -36,6 +36,11 @@
 	.globl _start
 	.globl _start_warm
 _start:
+	/* Set up a PMP to permit all accesses */
+	li t0, (1 << (31 + (__riscv_xlen / 64) * (53 - 31))) - 1
+    csrw pmpaddr0, t0
+    li t0, PMP_A_NAPOT | PMP_R | PMP_W | PMP_X
+    csrw pmpcfg0, t0
 	/* Find preferred boot HART id */
 	MOV_3R	s0, a0, s1, a1, s2, a2
 	call	fw_boot_hart
