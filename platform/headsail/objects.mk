@@ -8,7 +8,7 @@
 platform-cppflags-y =
 
 # C Compiler and assembler flags.
-platform-cflags-y = -g -O0
+platform-cflags-y = -mstrict-align -0O -g -march=rv64gc -mabi=lp64d
 platform-asflags-y =
 
 # Linker flags: additional libraries and object files that the platform
